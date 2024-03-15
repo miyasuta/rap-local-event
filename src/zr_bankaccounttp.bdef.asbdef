@@ -1,0 +1,52 @@
+managed implementation in class ZBP_R_BankAccountTP unique;
+strict ( 2 );
+with draft;
+define behavior for ZR_BankAccountTP alias BankAccount
+persistent table ZBANKACCOUNT
+draft table ZBANKACCOUNT00D
+etag master LocalLastChangedAt
+lock master total etag LastChangedAt
+authorization master( global )
+late numbering
+with additional save
+
+{
+  field ( readonly )
+   CreatedBy,
+   CreatedAt,
+   LastChangedBy,
+   LocalLastChangedAt,
+   LastChangedAt,
+   AccountID,
+   Balance;
+
+  field ( readonly : update )
+  Currency;
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  action deposit parameter za_amount result [1] $self;
+  action withdraw parameter za_amount result [1] $self;
+
+  event balanceChanged parameter ZA_BALANCECHANGED;
+
+  mapping for ZBANKACCOUNT
+  {
+    AccountID = ACCOUNTID;
+    Balance = BAlANCE;
+    Currency = CURRENCY;
+    CreatedBy = CREATED_BY;
+    CreatedAt = CREATED_AT;
+    LastChangedBy = LAST_CHANGED_BY;
+    LocalLastChangedAt = LOCAL_LAST_CHANGED_AT;
+    LastChangedAt = LAST_CHANGED_AT;
+  }
+}

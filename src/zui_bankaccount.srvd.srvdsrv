@@ -1,0 +1,4 @@
+@ObjectModel.leadingEntity.name: 'ZC_BankAccountTP'
+define service ZUI_BankAccount {
+  expose ZC_BANKACCOUNTTP as BankAccount;
+}
